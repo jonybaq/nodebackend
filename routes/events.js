@@ -1,0 +1,11 @@
+const express= require('express');
+const { obtenerEvento, crearEvento, actualizarEvento, borrarEvento } = require('../controllers/events');
+const { validarToken } = require('../validators/authValidators');
+const { registerEventValidator } = require('../validators/eventValidators');
+const router=express.Router();
+router.use(validarToken);
+router.get('/',obtenerEvento);
+router.post('/',registerEventValidator,crearEvento);
+router.put('/:id',actualizarEvento);
+router.delete('/:id',borrarEvento);
+module.exports=router;
