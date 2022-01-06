@@ -17,7 +17,7 @@ const crearUsuario = async (req, res) => {
             const token=await generarJWT(respuesta._id,respuesta.name);
             return res.status(201).json({
                 ok: true,
-                msg: 'Register',
+                msg: [{msg:'Register'}],
                 user: {
                     id: respuesta._id,
                     name: respuesta.name,
@@ -29,7 +29,7 @@ const crearUsuario = async (req, res) => {
     } else {
         return res.status(406).json({
             ok: false,
-            msg: 'Ya existe un usuario con ese correo electronico'
+            msg: [{msg:'Ya existe un usuario con ese correo electronico'}]
         });
     }
 }
@@ -57,7 +57,7 @@ const loginUsuario = async (req, res) => {
             //console.log(`token`, token);
             return res.json({
                 ok: true,
-                msg: 'Usuario Validado',
+                msg: [{msg:'Usuario Validado'}],
                 user: {
                     id: userFind.id,
                     name: userFind.name,
@@ -68,13 +68,13 @@ const loginUsuario = async (req, res) => {
         } else {
             return res.status(406).json({
                 ok: false,
-                msg: 'Password incorrecto'
+                msg: [{msg:'Password incorrecto'}]
             });
         }
     } else {
         return res.status(406).json({
             ok: false,
-            msg: 'Correo electronico no existente'
+            msg: [{msg:'Correo electronico no existente'}]
         });
     }
 
@@ -102,7 +102,7 @@ const updateUsuario = async (req, res) => {
                 const token=await generarJWT(respuesta._id,respuesta.name);
                 return res.json({
                     ok: true,
-                    msg: 'Update user',
+                    msg: [{msg:'Update user'}],
                     user: {
                         id: respuesta._id,
                         name: respuesta.name,
@@ -115,12 +115,12 @@ const updateUsuario = async (req, res) => {
                 if (err.code===11000) {
                     return res.status(406).json({
                         ok: false,
-                        msg: `Error valor unico ${JSON.stringify(err.keyValue)}`
+                        msg: [{msg:`Error valor unico ${JSON.stringify(err.keyValue)}`}]
                     });
                 } else {
                     return res.status(406).json({
                         ok: false,
-                        msg: 'error'
+                        msg: [{msg:'error'}]
                     });
                 }
                 
@@ -133,7 +133,7 @@ const updateUsuario = async (req, res) => {
     }else{
         return res.status(406).json({
             ok: false,
-            msg: 'Usuario no existente'
+            msg: [{msg:'Usuario no existente'}]
         });
     }
 }
