@@ -2,6 +2,7 @@ const express= require('express');
 const User = require('../models/User');
 const bcrypt = require('bcryptjs');
 const { generarJWT } = require('../helpers/jwt');
+const jwt  = require('jsonwebtoken');
 
 
 const crearUsuario = async (req, res) => {
@@ -138,6 +139,33 @@ const updateUsuario = async (req, res) => {
     }
 }
 
+const validarTokenUser=(req,res)=>{
+    //valida el token
+    //console.log(`requestmiddleware`, req);
+    const token=req.header('x-token');
+    if(token){
+       // console.log(`token`, token);
+        try {
+            const payload=jwt.verify(
+                token,
+                process.env.SECRET_JWT);
+            
+                return res.json({
+                    ok: true,
+                    msg: [{msg:'Usuario Activo'}],
+                    user: payload
+                }); 
+        } catch (error) {
+            console.log(`error`, error.message);
+            return res.status(401).json({ ok:false, msg: [{msg:error.message}]});
+        }
+    }else{
+        return res.status(401).json({ ok:false, msg: ['No se encuentra el parametro x-token en el header']});
+    }
+}
+
+
+
 module.exports = {
-    crearUsuario, loginUsuario,updateUsuario
+    crearUsuario, loginUsuario,updateUsuario,validarTokenUser
 }

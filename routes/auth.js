@@ -3,7 +3,7 @@
 rutas para api/auth
 */
 const express= require('express');
-const { crearUsuario, loginUsuario, updateUsuario } = require('../controllers/auth');
+const { crearUsuario, loginUsuario, updateUsuario, validarTokenUser } = require('../controllers/auth');
 
 const { loginValidator, registerValidator, validarToken } = require('../validators/authValidators');
 
@@ -14,5 +14,7 @@ router.post('/',loginValidator,loginUsuario);
 router.post('/new',registerValidator,crearUsuario);
 //put update
 router.put('/update',[validarToken],updateUsuario);
+
+router.get('/renew',validarTokenUser);
 module.exports=router;
 //export default router;
