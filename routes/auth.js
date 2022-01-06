@@ -9,7 +9,7 @@ const { loginValidator, registerValidator, validarToken } = require('../validato
 
 const router=express.Router();
 //get login
-router.get('/',loginValidator,loginUsuario);
+router.post('/',loginValidator,loginUsuario);
 //post register
 router.post('/new',registerValidator,crearUsuario);
 //put update
