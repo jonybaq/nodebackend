@@ -160,7 +160,7 @@ const validarTokenUser=(req,res)=>{
             return res.status(401).json({ ok:false, msg: [{msg:error.message}]});
         }
     }else{
-        return res.status(401).json({ ok:false, msg: ['No se encuentra el parametro x-token en el header']});
+        return res.status(401).json({ ok:false, msg: [{msg:'No se encuentra el parametro x-token en el header'}]});
     }
 }
 

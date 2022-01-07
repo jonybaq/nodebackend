@@ -7,7 +7,7 @@ const obtenerEvento = async (req, res) => {
     const eventos = await Evento.find().populate('user', 'name email');
     return res.json({
         ok: true,
-        msg: 'Eventos obtenidos',
+        msg: [{msg:'Eventos obtenidos'}],
         eventos
     });
 
@@ -27,14 +27,14 @@ const crearEvento = (req, res) => {
     newEvent.save().then((respuesta) => {
         return res.json({
             ok: true,
-            msg: 'Evento Creado',
+            msg: [{msg:'Evento Creado'}],
             event: respuesta
         });
     }).catch((err) => {
 
         return res.status(500).json({
             ok: false,
-            msg: err
+            msg: [{msg: err}]
         });
 
 
@@ -50,7 +50,7 @@ const actualizarEvento = async (req, res) => {
         if (authUser.id !== eventFind.user.toString()) {
             return res.status(401).json({
                 ok: false,
-                msg: 'No se puede modificar un evento realizado por otro usuario'
+                msg: [{msg:'No se puede modificar un evento realizado por otro usuario'}]
             });
         } else {
 
@@ -73,7 +73,7 @@ const actualizarEvento = async (req, res) => {
             eventFind.save().then((respuesta) => {
                 return res.json({
                     ok: true,
-                    msg: 'Update event',
+                    msg: [{msg:'Update event'}],
                     event: respuesta
                 });
             }).catch((err) => {
@@ -81,7 +81,7 @@ const actualizarEvento = async (req, res) => {
 
                 return res.status(406).json({
                     ok: false,
-                    msg: 'error'
+                    msg: [{msg:'error'}]
                 });
 
 
@@ -94,7 +94,7 @@ const actualizarEvento = async (req, res) => {
     } else {
         return res.status(406).json({
             ok: false,
-            msg: 'Evento no existente'
+            msg: [{msg:'Evento no existente'}]
         });
     }
 
@@ -105,12 +105,12 @@ const borrarEvento = (req, res) => {
     Evento.deleteOne({ _id: id }).then((respuesta) => {
         return res.json({
             ok: true,
-            msg: 'Evento Eliminado ',respuesta
+            msg: [{msg:'Evento Eliminado ',respuesta}]
         });
     }).catch((err) => {
         return res.status(406).json({
             ok: false,
-            msg: error.message
+            msg: [{msg:error.message}]
         });
     });
 }
