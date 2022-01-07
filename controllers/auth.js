@@ -153,7 +153,7 @@ const validarTokenUser=(req,res)=>{
                 return res.json({
                     ok: true,
                     msg: [{msg:'Usuario Activo'}],
-                    user: payload
+                    user: {...payload, token}
                 }); 
         } catch (error) {
             console.log(`error`, error.message);
